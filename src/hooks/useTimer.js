@@ -6,9 +6,14 @@ export function useTimer(initialValue = 60) {
 
   const interval = useRef(null);
 
+  function setTimeValue(val) {
+  setTime(val);
+}
+
   function start(){
     if(running) return;
     setRunning(true);
+
 
 
     interval.current = setInterval(() => {
@@ -49,7 +54,8 @@ useEffect(() => {
     running,
     start,
     pause,
-    reset
+    reset,
+    setTimeValue
 
   };
 }

@@ -1,17 +1,32 @@
 
 import { useTimer } from "../hooks/useTimer.js"
-export default function Compteur({value}){
-    const {time, running,   start,pause, reset} = useTimer(value);
-    let etat = running ? "Stop" : "Run";
+import { useState } from "react";
 
+export default function Compteur({value}){
+    const {time, running,   start,pause, reset, setTimeValue} = useTimer(value);
+    let etat = running ? "Stop" : "Run";
+    const [input, setInput] = useState(value);
+ function handleStartStop() {
+    if (running) {
+      pause();
+    } else {
+      setTimeValue(input); 
+      start();
+    }
+  }
     return(
         <div>
-            <div 
-            className="compteur">
+            <input 
+            className="compteur"
+            onChange={(e) => setInput(Number(e.target.value))}
+            value={input} 
+            style={{display : running? "none": "block"}}/>
+                
+            <div>
                 {time}
             </div>
 
-            <button onClick={running?pause:start}>{etat}</button>
+            <button onClick={handleStartStop}>{etat}</button>
             <button onClick={reset}>Reset</button>
         </div>
         );
